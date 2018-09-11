@@ -14,9 +14,11 @@ public class SolveMaze {
      * Implement your maze solving algorithm in the main method below.
      *
      * @param unused unused input arguments
+     * @throw InterruptedException for thread sleep
      */
 
-    public static void main(final String[] unused) {
+    public static void main(final String[] unused) throws InterruptedException {
+        // @throw InterruptedException for thread sleep
         /*
          * Create a new 10 x 10 maze. Feel free to change these values.
          */
@@ -34,8 +36,18 @@ public class SolveMaze {
          * Feel free to adjust this number if you experiment with other mazes.
          */
         for (int step = 0; step < 1000; step++) {
-            // Implement your maze solving algorithm here
+            maze.turnLeft();
+            while (!maze.canMove()) {
+                maze.turnRight();
+            }
+            maze.move();
+            System.out.println(maze);
+            Thread.sleep(300);
+            if (maze.isFinished()) {
+                step = 1000;
+            }
         }
+
 
         if (maze.isFinished()) {
             System.out.println("You solved the maze!");
